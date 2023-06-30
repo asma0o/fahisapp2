@@ -36,6 +36,8 @@ class AuthMethods {
         email: emailll,
         password: passworddd,
         Name: usernameee,
+        uid: credential.user!.uid,
+        vehicle: [],
         // uid: credential.user!.uid,
       );
 

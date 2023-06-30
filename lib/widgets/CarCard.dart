@@ -1,3 +1,4 @@
+import 'package:fahisapp/screens/VehicleDetails.dart';
 import 'package:fahisapp/widgets/DeleteDropDown.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -8,7 +9,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 class CarCardTest extends StatelessWidget {
   final String comName;
   final String carModel;
-  final Image logo;
+  final String logo;
   final String latterPlate;
   final int numPlate;
   const CarCardTest({
@@ -72,7 +73,7 @@ class CarCardTest extends StatelessWidget {
             Positioned(
               left: 85,
               bottom: 230,
-              child: logo,
+              child: Image.asset(logo,height: 20,width: 20),
             ),
             Positioned(
               bottom: 100,
@@ -98,7 +99,7 @@ class CarCardTest extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/VehicleDetails');
+                    Navigator.push(context,MaterialPageRoute(builder: (context) =>VehicleDetails(comName: comName, carModel: carModel, logo: logo, latterPlate: latterPlate, numPlate: numPlate) ,));
                   },
                   child: const Text(
                     "التفاصيل",
@@ -175,9 +176,9 @@ class CarCardTest extends StatelessWidget {
                 radius: 40.0,
                 lineWidth: 11.0,
                 animation: true,
-                percent: 0.7,
-                center: const Text(
-                  "70.0%",
+                percent: numPlate/100,
+                center:  Text(
+                  "${numPlate}.0%",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,

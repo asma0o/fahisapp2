@@ -381,7 +381,7 @@ class _AddVehicleState extends State<AddVehicle> {
                                 ),
                                 onPressed: () async {
                                   Navigator.pushNamed(context, '/MobileScerren');
-
+                                  //
                                   // FirestoreMethods().AddVehicle(
                                   //   PlateLetter: _PlateLController.text,
                                   //   PlateNo: _PlateNController,
@@ -416,3 +416,177 @@ class _AddVehicleState extends State<AddVehicle> {
     );
   }
 }
+
+///to get Company list
+// ///
+// final CollectionReference<Map<String, dynamic>> companiesCollection =
+// FirebaseFirestore.instance.collection('companies');
+//
+// void addCompanyToFirestore(Company company) {
+//   companiesCollection.add(company.toJson());
+// }
+//
+// Future<List<Company>> getCompaniesFromFirestore() async {
+//   final snapshot = await companiesCollection.get();
+//   return snapshot.docs.map((doc) => Company.fromJson(doc.data())).toList();
+// }
+
+////
+// List<Company> companies = [];
+//   List<CarModel> carModels = [];
+//   List<String> features = [];
+//   String selectedCompany = '';
+//   String selectedCarModel = '';
+//   String selectedFeature = '';
+
+///to get the compnies you can get it when app start or any thing like you want
+// @override
+// void initState() {
+//   super.initState();
+//   fetchCompanies();
+// }
+///here Companies the first part of the vehcile call it in onchange
+// Future<void> fetchCompanies() async {
+//   final List<Company> fetchedCompanies = await getCompaniesFromFirestore();
+//   setState(() {
+//     companies = fetchedCompanies;
+//     companies.forEach((element) {
+//       companiessssssss.add(element.name);
+//       print(element.name);
+//     });
+//   });
+// }
+///here CarModels the second part of the vehcile call it in onchange
+// Future<void> fetchCarModels() async {
+//   final selectedCompanyObj = companies.firstWhere((company) => company.name == selectedCompany);
+//   setState(() {
+//     carModels = selectedCompanyObj.carModels;
+//     selectedCarModel = '';
+//     selectedFeature = '';
+//   });
+// }
+///here fetch the therd part of the vehcile call it in onchange
+// Future<void> fetchFeatures() async {
+//   final selectedCompanyObj = companies.firstWhere((company) => company.name == selectedCompany);
+//   final selectedCarModelObj =
+//   selectedCompanyObj.carModels.firstWhere((carModel) => carModel.name == selectedCarModel);
+//   setState(() {
+//     features = selectedCarModelObj.features;
+//     selectedFeature = '';
+//   });
+// }
+///this methoud to upload data update it  in the documentRef just change the uid that you will get it from the user model when you call it
+// void uploadData() {
+//   print('Selected Company: $selectedCompany');
+//   print('Selected Car Model: $selectedCarModel');
+//   print('Selected Feature: $selectedFeature');
+//DocumentReference documentRef = FirebaseFirestore.instance.collection('Users').doc('JNlu4vWmoKS363gfqkBWd6opLPk2');
+//
+// // Add an item to a list field
+//           documentRef.update({
+//             'vehicle': FieldValue.arrayUnion([
+//               {  'companyName': "$selectedCompany",
+//           'carModel': "$selectedCarModel",
+//           'uid': "uidwww",
+//           'loogo': "loogso",
+//           'latterPlate': "$selectedFeature",
+//           'numPlate': 22,}
+//             ]),
+//           })
+//               .then((value) {
+//             print('Item added to list field successfully!');
+//           })
+//               .catchError((error) {
+//             print('Failed to add item to list field: $error');
+//           });
+//
+//         },
+
+// }
+///how to chose the value in drop down look to the  onchanged and gett the data like you want  and put it into the items
+//  DropdownButtonFormField<String>(
+//               value: selectedCompany,
+//               onChanged: ( newValue) {
+//                 setState(() {
+//                   selectedCompany = newValue??'';
+//                   // Perform additional operations as needed
+//                 });
+//               },
+//               items: companies.map<DropdownMenuItem<String>>((String value) {
+//                 return DropdownMenuItem<String>(
+//                   value: value,
+//                   child: Text(value),
+//                 );
+//               }).toList(),
+//               hint: Text('Select Company'),
+//             ),
+//             SizedBox(height: 16),
+//             // DropdownButtonFormField<String>(
+//             //   value: selectedCarModel,
+//             //   onChanged: (value) {
+//             //     setState(() {
+//             //       selectedCarModel = value ?? '';
+//             //       selectedFeature = '';
+//             //       fetchFeatures();
+//             //     });
+//             //   },
+//             //   items: carModels.map((model) {
+//             //     return DropdownMenuItem<String>(
+//             //       value: model.name,
+//             //       child: Text(model.name),
+//             //     );
+//             //   }).toList(),
+//             //   hint: Text('Select Car Model'),
+//             // ),
+//             // SizedBox(height: 16),
+//             // DropdownButtonFormField<String>(
+//             //   value: selectedFeature,
+//             //   onChanged: (value) {
+//             //     setState(() {
+//             //       selectedFeature = value ?? '';
+//             //     });
+//             //   },
+//             //   items: features.map((feature) {
+//             //     return DropdownMenuItem<String>(
+//             //       value: feature,
+//             //       child: Text(feature),
+//             //     );
+//             //   }).toList(),
+//             //   hint: Text('Select Feature'),
+//             // ),
+/// to add car model
+//  final company = Company(
+//             name: 'Company C',
+//             carModels: [
+//               CarModel(
+//                 name: 'Model W',
+//                 features: ['Feature 9', 'Feature 10', 'Feature 11'],
+//               ),
+//             ],
+//           );
+//           addCompanyToFirestore(company);
+//           fetchCompanies();
+///to add vehicle to the list
+// onPressed: () {
+// // Assuming you have a reference to the document you want to update
+//           DocumentReference documentRef = FirebaseFirestore.instance.collection('Users').doc('JNlu4vWmoKS363gfqkBWd6opLPk2');
+//
+// // Add an item to a list field
+//           documentRef.update({
+//             'vehicle': FieldValue.arrayUnion([
+//               {  'companyName': "companyNdame",
+//           'carModel': "carModelss",
+//           'uid': "uidwww",
+//           'loogo': "loogso",
+//           'latterPlate': "latterPlate",
+//           'numPlate': 22,}
+//             ]),
+//           })
+//               .then((value) {
+//             print('Item added to list field successfully!');
+//           })
+//               .catchError((error) {
+//             print('Failed to add item to list field: $error');
+//           });
+//
+//         },

@@ -5,6 +5,8 @@ import 'package:fahisapp/widgets/CarCard.dart';
 // import 'package:fahisapp/provider/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../models/user.dart';
 // import 'package:provider/provider.dart';
 
 
@@ -15,44 +17,27 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class CarCard {
-  String companyName;
-  String carModel;
-  Image loogo;
-  String latterPlate;
-  int numPlate;
-
-  CarCard({
-    required this.companyName,
-    required this.carModel,
-    required this.loogo,
-    required this.latterPlate,
-    required this.numPlate,
-  });
-}
 
 List allCarCard = [
   CarCard(
     companyName: 'test2',
     carModel: 'test',
     latterPlate: 'ABC',
+
     numPlate: 123,
-    loogo: Image.asset(
+    loogo:
       "images/audi-logo.png",
-      height: 160,
-      width: 200,
-    ),
+
   ),
   CarCard(
     companyName: 'test2',
     carModel: 'test',
     latterPlate: 'ABC',
+
     numPlate: 123,
-    loogo: Image.asset(
+    loogo:
       "images/audi-logo.png",
-      height: 160,
-      width: 200,
-    ),
+
   ),
 ];
 
@@ -67,13 +52,15 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
     try {
+
       DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
           .instance
           .collection('Users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc('JNlu4vWmoKS363gfqkBWd6opLPk2')//FirebaseAuth.instance.currentUser!.uid
           .get();
 
       userData = snapshot.data()!;
+      print(userData['vehicle']);
     } catch (e) {
       print(e.toString());
     }
@@ -130,39 +117,39 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 // floatingActionButton: BtmNavBar(),
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
-                        alignment: AlignmentDirectional.topStart,
-                        child: const Text(
-                          "مركباتي",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+                body: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                      alignment: AlignmentDirectional.topStart,
+                      child: const Text(
+                        "مركباتي",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ...allCarCard.map(
-                              (item) => CarCardTest(
-                                comName: item.companyName,
-                                carModel: item.carModel,
-                                logo: item.loogo,
-                                latterPlate: item.latterPlate,
-                                numPlate: item.numPlate,
-                              ),
-                            ),
-                          ],
-                        ),
+                    ),
+                    Image(image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/fahisapp-55cb0.appspot.com/o/car-logos%2FAudi.png?alt=media&token=7581e7cc-4139-494d-b730-fcdd7e153cea')),
+                    Expanded( // Wrap the ListView with Expanded
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                         // print(userData['vehicle'][0].companyName);
+                          return CarCardTest(
+                            comName: userData['vehicle'][index]['companyName'],
+                            carModel: userData['vehicle'][index]['carModel'],
+                            logo: userData['vehicle'][index]['loogo'],
+                            latterPlate: userData['vehicle'][index]['latterPlate'],
+                            numPlate: userData['vehicle'][index]['numPlate'],
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 10);
+                        },
+                        itemCount: userData['vehicle'].length,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

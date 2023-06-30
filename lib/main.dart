@@ -1,4 +1,3 @@
-// import 'package:fahisapp/splash_view.dart';
 import 'package:fahisapp/responsive/Mobile_Screen.dart';
 import 'package:fahisapp/screens/AddFirstV.dart';
 import 'package:fahisapp/screens/AddServices.dart';
@@ -50,8 +49,12 @@ void main() async {
         '/MyServices': (context) => const MyServices(),
         '/AddVehicle': (context) => const AddVehicle(),
         '/FirstAdd': (context) => const FirstAdd(),
-        '/VehicleDetails': (context) => const VehicleDetails(),
+
       },
     ),
   );
 }
+
+
+
+

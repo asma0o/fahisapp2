@@ -38,7 +38,8 @@ class _SignupScreenState extends State<SignupScreen> {
           'Email': _emailController.text,
           'Adress': _AdressController.text,
           'PhoneNo': _PhoneNoController.text,
-          'Password': _passController.text
+          'Password': _passController.text,
+
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));

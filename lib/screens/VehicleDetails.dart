@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 
 class VehicleDetails extends StatefulWidget {
-  const VehicleDetails({super.key});
+  final String comName;
+  final String carModel;
+  final String logo;
+  final String latterPlate;
+  final int numPlate;
+  const VehicleDetails({super.key, required this.comName, required this.carModel, required this.logo, required this.latterPlate, required this.numPlate});
 
   @override
   State<VehicleDetails> createState() => _VehicleDetailsState();
@@ -41,6 +46,11 @@ class _VehicleDetailsState extends State<VehicleDetails> {
   }
 
   Widget build(BuildContext context) {
+
+     _VinController.text = widget.latterPlate;
+     _MakerController.text = '${widget.numPlate}';
+     _ModelController.text = widget.logo;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
