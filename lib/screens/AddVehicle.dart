@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fahisapp/models/car_models.dart';
 import 'package:fahisapp/shared/AppBar.dart';
 import 'package:flutter/material.dart';
 //import 'package:untitled3/firebase_services/firestore.dart';
 //import 'package:untitled3/shared/constant/app-bar.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddVehicle extends StatefulWidget {
   const AddVehicle({super.key});
@@ -22,20 +24,72 @@ class _AddVehicleState extends State<AddVehicle> {
   final _MakerController = TextEditingController();
   final _ModelController = TextEditingController();
   final _MyearController = TextEditingController();
+
+
+  final CollectionReference<Map<String, dynamic>> companiesCollection =
+FirebaseFirestore.instance.collection('companies');
+
+void addCompanyToFirestore(Company company) {
+  companiesCollection.add(company.toJson());
+}
+
+Future<List<Company>> getCompaniesFromFirestore() async {
+  final snapshot = await companiesCollection.get();
+  return snapshot.docs.map((doc) => Company.fromJson(doc.data())).toList();
+}
+
+
+  List<Company> companies = [];
+  List<String> companiess = [];
+  List<CarModel> carModels = [];
+  List<String> features = [];
+  String selectedCompany = '';
+  String selectedCarModel = '';
+  String selectedFeature = '';
+
+  Future<void> fetchCompanies() async {
+  final List<Company> fetchedCompanies = await getCompaniesFromFirestore();
+  setState(() {
+    companies = fetchedCompanies;
+    companies.forEach((element) {
+      companiess.add(element.name);
+      print(element.name);
+    });
+  });
+}
+  Future<void> fetchCarModels() async {
+  final selectedCompanyObj = companies.firstWhere((company) => company.name == selectedCompany);
+  setState(() {
+    carModels = selectedCompanyObj.carModels;
+    selectedCarModel = '';
+    selectedFeature = '';
+  });
+}
+
+Future<void> fetchFeatures() async {
+  final selectedCompanyObj = companies.firstWhere((company) => company.name == selectedCompany);
+  final selectedCarModelObj =
+  selectedCompanyObj.carModels.firstWhere((carModel) => carModel.name == selectedCarModel);
+  setState(() {
+    features = selectedCarModelObj.features;
+    selectedFeature = '';
+  });
+}
+
+  String selectedValue = '';
+
+  List<String> dropdownValues = [
+    'Option 1',
+    'Option 2',
+    'Option 3',
+  ];
+
+
   @override
   void initState() {
     super.initState();
+    fetchCompanies();
 
-    @override
-    void dispose() {
-      super.dispose();
-      _PlateNController.dispose();
-      _PlateLController.dispose();
-      _VinController.dispose();
-      _MakerController.dispose();
-      _ModelController.dispose();
-      _MyearController.dispose();
-    }
 
     // Start listening to changes.
   }
@@ -129,6 +183,8 @@ class _AddVehicleState extends State<AddVehicle> {
                               },
                             ),
                           ),
+
+
                           SizedBox(
                             height: 15,
                           ),
@@ -381,6 +437,28 @@ class _AddVehicleState extends State<AddVehicle> {
                                 ),
                                 onPressed: () async {
                                   Navigator.pushNamed(context, '/MobileScerren');
+                                  print('Selected Company: $selectedCompany');
+                                  print('Selected Car Model: $selectedCarModel');
+                                  print('Selected Feature: $selectedFeature');
+                                  DocumentReference documentRef = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser?.uid);
+
+// Add an item to a list field
+                                  documentRef.update({
+                                    'vehicle': FieldValue.arrayUnion([
+                                      {  'companyName': "$selectedCompany",
+                                        'carModel': "$selectedCarModel",
+                                        'uid': "uidwww",
+                                        'loogo': "https://firebasestorage.googleapis.com/v0/b/fahisapp-55cb0.appspot.com/o/car-logos%2FAudi.png?alt=media&token=7581e7cc-4139-494d-b730-fcdd7e153cea",
+                                        'latterPlate': "$selectedFeature",
+                                        'numPlate': 22,}
+                                    ]),
+                                  })
+                                      .then((value) {
+                                    print('Item added to list field successfully!');
+                                  })
+                                      .catchError((error) {
+                                    print('Failed to add item to list field: $error');
+                                  });
                                   //
                                   // FirestoreMethods().AddVehicle(
                                   //   PlateLetter: _PlateLController.text,
@@ -451,7 +529,7 @@ class _AddVehicleState extends State<AddVehicle> {
 //   setState(() {
 //     companies = fetchedCompanies;
 //     companies.forEach((element) {
-//       companiessssssss.add(element.name);
+//       companies.add(element.name);
 //       print(element.name);
 //     });
 //   });

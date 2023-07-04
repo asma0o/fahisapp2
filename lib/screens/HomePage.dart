@@ -18,29 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 
-List allCarCard = [
-  CarCard(
-    companyName: 'test2',
-    carModel: 'test',
-    latterPlate: 'ABC',
-
-    numPlate: 123,
-    loogo:
-      "images/audi-logo.png",
-
-  ),
-  CarCard(
-    companyName: 'test2',
-    carModel: 'test',
-    latterPlate: 'ABC',
-
-    numPlate: 123,
-    loogo:
-      "images/audi-logo.png",
-
-  ),
-];
-
 class _HomePageState extends State<HomePage> {
   Map userData = {};
   bool isLoading = true;

@@ -52,6 +52,8 @@ class CarCard {
   String companyName;
   String carModel;
   String loogo;
+  String adas;
+
   String latterPlate;
 
   int numPlate;
@@ -60,6 +62,7 @@ class CarCard {
     required this.companyName,
     required this.carModel,
     required this.loogo,
+    required this.adas,
     required this.latterPlate,
 
     required this.numPlate,
@@ -69,6 +72,7 @@ class CarCard {
     return {
       "companyName": companyName,
       "carModel": carModel,
+      "adas": adas,
 
       "loogo": loogo, // Consider updating "loogo" to "logo" for consistency
       "latterPlate": latterPlate,
@@ -85,6 +89,7 @@ class CarCard {
     return CarCard(
       companyName: snapshot["companyName"],
       carModel: snapshot["carModel"],
+      adas: snapshot["adas"],
 
       loogo: snapshot["loogo"],
       latterPlate: snapshot["latterPlate"],

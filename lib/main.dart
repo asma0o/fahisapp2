@@ -8,6 +8,7 @@ import 'package:fahisapp/screens/MyServices.dart';
 import 'package:fahisapp/screens/ServicesPage.dart';
 import 'package:fahisapp/screens/SignUpPage.dart';
 import 'package:fahisapp/screens/VehicleDetails.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:fahisapp/start_view/splash/SplashView.dart';
 import 'package:fahisapp/widgets/NotifiService.dart';
@@ -36,7 +37,7 @@ void main() async {
 
       // home:  Onbording(),
 
-      initialRoute: '/',
+      initialRoute:FirebaseAuth.instance.currentUser !=null ? '/homepage' :'/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const SplashView(),
